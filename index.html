@@ -277,9 +277,17 @@
     </div>
 
     <script>
-        // 修改：API 路徑改為通用的，後續會加上 Query Parameter
-        // 請注意：如果您的後端部署網址不同，這裡需要修改
+        // ==========================================
+        // 設定 API 網址 (請根據您現在的測試環境選擇)
+        // ==========================================
+        
+        // 情況 A：如果您正在電腦上跑後端 (npm run dev)，請使用這行 (把註解拿掉)：
+        // const API_BASE_URL = "http://localhost:3000/api/weather";
+
+        // 情況 B：如果您已經把後端部署到 Zeabur 了，請使用這行：
         const API_BASE_URL = "https://rl-weather.zeabur.app/api/weather"; 
+
+        // ==========================================
 
         function getWeatherIcon(weather) {
             if (!weather) return "🌤️";
@@ -383,20 +391,27 @@
         }
 
         async function fetchWeather() {
-            // 顯示 Loading 畫面 (切換城市時使用)
             document.getElementById('loading').style.display = 'flex';
             document.getElementById('mainContent').style.display = 'none';
 
             try {
-                // 修改：取得下拉選單選中的縣市
                 const selectedCity = document.getElementById('locationSelect').value;
-                
-                // 修改：將縣市名稱作為 Query Parameter 傳給後端
-                // 為了避免中文編碼問題，使用 encodeURIComponent
                 const targetUrl = `${API_BASE_URL}?city=${encodeURIComponent(selectedCity)}`;
+                
+                // Debug 用：在 Console 印出現在到底在抓哪個網址
+                console.log("正在抓取天氣資料:", targetUrl);
 
-                const delayPromise = new Promise(resolve => setTimeout(resolve, 800)); // 縮短一點等待時間體驗較好
-                const fetchPromise = fetch(targetUrl).then(res => res.json());
+                const delayPromise = new Promise(resolve => setTimeout(resolve, 800));
+                
+                // 修改處：這裡我們把 fetch 拆開來寫，以便檢查錯誤
+                const fetchPromise = fetch(targetUrl).then(async res => {
+                    // 檢查伺服器回應狀態
+                    if (!res.ok) {
+                        // 如果是 404 (找不到) 或 500 (伺服器壞掉)
+                        throw new Error(`伺服器回應錯誤: ${res.status} ${res.statusText}`);
+                    }
+                    return res.json();
+                });
 
                 const [_, json] = await Promise.all([delayPromise, fetchPromise]);
 
@@ -405,19 +420,26 @@
                     document.getElementById('loading').style.display = 'none';
                     document.getElementById('mainContent').style.display = 'block';
                 } else {
-                    throw new Error("API Error");
+                    throw new Error("API 回傳 success: false");
                 }
             } catch (e) {
-                console.error(e);
-                alert("天氣資料讀取失敗，狸克把網路線咬斷了！");
+                // 將詳細錯誤印在 Console (按 F12 -> Console 查看)
+                console.error("詳細錯誤訊息:", e);
+                
+                // 根據錯誤類型給予不同提示
+                let errorMsg = "天氣資料讀取失敗，狸克把網路線咬斷了！";
+                if (e.message.includes("404")) {
+                    errorMsg = "找不到路徑 (404)，請確認後端是否已部署最新版本？";
+                } else if (e.message.includes("Failed to fetch")) {
+                    errorMsg = "連線失敗，請確認後端伺服器是否有開啟？";
+                }
+
+                alert(errorMsg);
                 document.getElementById('loading').style.display = 'none';
             }
         }
 
-        // 初始載入
         document.addEventListener("DOMContentLoaded", fetchWeather);
-
-        // 修改：新增監聽器，當下拉選單改變時，重新抓取天氣
         document.getElementById('locationSelect').addEventListener('change', fetchWeather);
     </script>
 </body>
