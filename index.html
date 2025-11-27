@@ -389,12 +389,12 @@
                         <div class="advice-item">
                             <div class="advice-icon">${advice.rainIcon}</div>
                             <div class="advice-text">${advice.rainText}</div>
-                            <div style="font-size:0.7rem; color:${advice.rainText.includes("帶傘") ? 'red' : '#777'}; font-weight:700;">降雨率 ${current.rain} %</div>
+                            <div style="font-size:0.7rem; color:${advice.rainText.includes("帶傘") ? 'red' : '#777'}; font-weight:700;">降雨率 ${current.rain}</div>
                         </div>
                         <div class="advice-item">
                             <div class="advice-icon">${advice.clothIcon}</div>
                             <div class="advice-text">${advice.clothText}</div>
-                            <div style="font-size:0.7rem; color:#777; font-weight:700;">最高溫 ${current.maxTemp}°C</div>
+                            <div style="font-size:0.7rem; color:#777; font-weight:700;">最高溫 ${current.maxTemp}</div>
                         </div>
                     </div>
                 </div>
@@ -415,8 +415,8 @@
                     <div class="mini-card">
                         <div class="mini-time">${p}</div>
                         <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
-                        <div class="mini-temp">${f.minTemp} - ${f.maxTemp} °C</div>
-                        <div style="font-size:0.8rem; color:#888; margin-top:5px; font-weight:700;">💧${f.rain} %</div>
+                        <div class="mini-temp">${f.minTemp} - ${f.maxTemp}</div>
+                        <div style="font-size:0.8rem; color:#888; margin-top:5px; font-weight:700;">💧${f.rain}</div>
                     </div>
                 `;
             });
