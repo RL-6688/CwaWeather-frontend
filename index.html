@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>島嶼氣象．誌</title> <link rel="icon" type="image/png" href="./icon.png">
+    <title>島嶼氣象．誌</title>
+    <link rel="icon" type="image/png" href="./icon.png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,8 +19,6 @@
             --ink-main: #3E3C3A;       /* 墨黑 */
             --ink-light: #706E6B;      /* 淺墨 */
             --accent-red: #A85A5A;     /* 硃砂紅（用於印章感） */
-            --accent-blue: #7D9CA4;    /* 霧霾藍 */
-            --accent-green: #8A9A5B;   /* 抹茶綠 */
             --border-line: #CFCBC0;    /* 淡淡的邊線 */
         }
 
@@ -51,13 +50,12 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            /* 磨砂玻璃感減弱，強調紙張的通透 */
             background: rgba(244, 240, 230, 0.85);
             backdrop-filter: blur(5px);
             border-bottom: 1px solid var(--border-line);
         }
 
-        /* 📍 地點選擇器：改為簡約文字風格 */
+        /* 📍 地點選擇器：極簡文字風格 */
         .location-select {
             appearance: none;
             -webkit-appearance: none;
@@ -94,7 +92,7 @@
             margin: 0 auto;
         }
 
-        /* Hero Card：改成類似詩籤/書頁的樣式 */
+        /* Hero Card：類似詩籤/書頁的樣式 */
         .hero-card {
             background: var(--paper-card);
             border: 1px solid var(--border-line);
@@ -102,7 +100,6 @@
             text-align: center;
             position: relative;
             margin-bottom: 50px;
-            /* 輕微的紙張浮起陰影 */
             box-shadow: 0 5px 15px rgba(0,0,0,0.03);
         }
 
@@ -114,7 +111,7 @@
             border: 1px solid rgba(0,0,0,0.05);
         }
 
-        /* 時段標籤：改為豎排或印章風格 */
+        /* 時段標籤 */
         .hero-period {
             position: absolute;
             top: -15px;
@@ -136,15 +133,15 @@
         }
 
         .hero-icon {
-            font-size: 4rem; /* 稍微縮小，更精緻 */
+            font-size: 4rem;
             margin-bottom: 10px;
             opacity: 0.9;
-            filter: sepia(0.3); /* 讓圖標稍微泛黃舊化 */
+            filter: sepia(0.3);
         }
 
         .hero-temp {
             font-size: 4.5rem;
-            font-weight: 400; /* 細字體更優雅 */
+            font-weight: 400;
             color: var(--ink-main);
             line-height: 1;
             font-family: 'Zen Old Mincho', serif;
@@ -158,7 +155,7 @@
             letter-spacing: 0.2em;
         }
 
-        /* Advice Grid：改為文字為主的排版 */
+        /* Advice Grid */
         .advice-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -186,7 +183,7 @@
         .advice-sub {
             font-size: 0.75rem;
             color: var(--ink-light);
-            font-family: sans-serif; /* 數據用無襯線體較好讀 */
+            font-family: sans-serif;
             letter-spacing: 0.05em;
         }
 
@@ -202,7 +199,6 @@
             display: block;
         }
         
-        /* 標題兩側的裝飾線 */
         .section-title::before, .section-title::after {
             content: "—";
             margin: 0 10px;
@@ -214,7 +210,7 @@
             overflow-x: auto;
             gap: 20px;
             padding-bottom: 20px;
-            padding-left: 5px; /* 修正左側裁切 */
+            padding-left: 5px;
             scrollbar-width: none;
         }
         .scroll-container::-webkit-scrollbar { display: none; }
@@ -222,24 +218,25 @@
         .mini-card {
             min-width: 120px;
             background: transparent;
-            border-right: 1px solid var(--border-line); /* 改用右側分隔線 */
+            border-right: 1px solid var(--border-line);
             padding: 10px;
             text-align: center;
             flex-shrink: 0;
+            display: flex; /* 加入 flex 讓內容垂直對齊更好控制 */
+            flex-direction: column;
+            justify-content: space-between;
         }
         .mini-card:last-child { border-right: none; }
 
         .mini-time {
             color: var(--ink-light);
             font-size: 0.85rem;
-            margin-bottom: 10px;
             letter-spacing: 0.1em;
-            display: block;
         }
 
         .mini-icon { 
             font-size: 2rem; 
-            margin: 10px 0; 
+            margin: 15px 0; /* 增加一點上下間距 */
             filter: sepia(0.3);
         }
         
@@ -248,9 +245,20 @@
             font-weight: 400; 
             color: var(--ink-main); 
             font-family: 'Zen Old Mincho', serif;
+            margin-bottom: 8px;
+        }
+        
+        /* 新增：底部降雨資訊的樣式 */
+        .mini-rain {
+            font-size: 0.75rem; 
+            color: var(--accent-red); 
+            opacity: 0.8;
+            letter-spacing: 0.1em;
+            font-family: 'Noto Serif TC', serif;
+            min-height: 1.2em; /* 確保即使沒文字也佔位 */
         }
 
-        /* Loading Screen：極簡風格 */
+        /* Loading Screen */
         .loading-screen {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -275,7 +283,6 @@
             50% { opacity: 1; }
         }
 
-        /* 淡入動畫 */
         .fade-in {
             animation: fadeIn 0.8s ease-out forwards;
             opacity: 0;
@@ -333,14 +340,11 @@
         // ==========================================
         // 設定 API 網址
         // ==========================================
-        
         // const API_BASE_URL = "http://localhost:3000/api/weather";
         const API_BASE_URL = "https://rl-weather.zeabur.app/api/weather"; 
-
         // ==========================================
 
         function getWeatherIcon(weather) {
-            // 文青風可以保持 Emoji，但藉由 CSS filter 讓它變舊
             if (!weather) return "🌤";
             if (weather.includes("晴")) return "☀";
             if (weather.includes("多雲")) return "⛅";
@@ -350,9 +354,8 @@
             return "🌤";
         }
 
-        // 修改文案邏輯，讓文字更有詩意
         function getAdvice(rainProb, maxTemp) {
-            let rainText = "宜 散步"; // 預設
+            let rainText = "宜 散步";
             let rainSub = "無雨";
 
             if (parseInt(rainProb) > 60) {
@@ -385,7 +388,6 @@
 
         function getTimePeriod(startTime) {
             const hour = new Date(startTime).getHours();
-            // 改成更文言的時段稱呼
             if (hour >= 5 && hour < 11) return "朝";
             if (hour >= 11 && hour < 14) return "午";
             if (hour >= 14 && hour < 18) return "暮";
@@ -407,7 +409,7 @@
                     <div class="hero-period"> ${period} 之候 </div>
                     <div class="hero-temp-container">
                         <div class="hero-icon">${getWeatherIcon(current.weather)}</div>
-                        <div class="hero-temp">${avgTemp}°</div>
+                        <div class="hero-temp">${avgTemp}</div>
                     </div>
                     <div class="hero-desc">${current.weather}</div>
                     
@@ -434,12 +436,20 @@
                     p = "明日 " + p;
                 }
 
+                // --- 修正後的降雨顯示邏輯 ---
+                const rainVal = parseInt(f.rain);
+                // 如果大於 0，顯示傘和數字；如果等於 0，顯示「無雨」
+                let rainDisplay = rainVal > 0 ? `☂ ${f.rain}` : '無雨';
+                // ---------------------------
+
                 scrollContainer.innerHTML += `
                     <div class="mini-card">
-                        <div class="mini-time">${p}</div>
-                        <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
-                        <div class="mini-temp">${f.minTemp}-${f.maxTemp}</div>
-                        <div style="font-size:0.7rem; color:#A85A5A; margin-top:5px; opacity:0.7;">${parseInt(f.rain) > 0 ? '☂ ' + f.rain : ''}</div>
+                        <div>
+                            <span class="mini-time">${p}</span>
+                            <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
+                            <div class="mini-temp">${f.minTemp}-${f.maxTemp}</div>
+                        </div>
+                        <div class="mini-rain">${rainDisplay}</div>
                     </div>
                 `;
             });
@@ -447,7 +457,6 @@
             const now = new Date();
             const month = now.getMonth() + 1;
             const date = now.getDate();
-            // 日期顯示改得簡單一點
             document.getElementById('updateTime').textContent = `${month}月${date}日 觀測`;
         }
 
